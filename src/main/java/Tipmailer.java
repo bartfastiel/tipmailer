@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class Tipmailer {
 
+  private static final Random RANDOM = new Random();
+
   public static void main(String[] args) throws IOException {
     MailSender mailSender = new MailSender();
     List<Path> tips = Files.list(Paths.get("tips")).collect(Collectors.toList());
@@ -16,11 +18,12 @@ public class Tipmailer {
   }
 
   private static void send(MailSender mailSender, String subscriber, String randomTip) {
+    System.out.println("sending to " + subscriber + ": " + randomTip);
     mailSender.sendMessage(MailSender.createEmail(subscriber, "Collective Intelligence - Tip of the day", randomTip));
   }
 
   private static String getRandomTip(List<Path> tips) {
-    Path randomTip = tips.get(new Random().nextInt(tips.size()));
+    Path randomTip = tips.get(RANDOM.nextInt(tips.size()));
     try {
       return Files.readAllLines(randomTip).stream().collect(Collectors.joining("\n"));
     } catch (IOException e) {
