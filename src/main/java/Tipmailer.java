@@ -10,8 +10,14 @@ public class Tipmailer {
 
   private static final Random RANDOM = new Random();
   private static final String[] FEEDBACK_MESSAGES = {
-    "It would be great to get feedback about yesterday",
-    "What do you think about yesterday's tip",
+    "It would be great to get feedback about yesterday:",
+    "What do you think about yesterday's tip?",
+  };
+  private static final String[] CONTRIBUTION_MESSAGES = {
+    "What do you want to suggest to your collegues?",
+    "Contribute!",
+    "Why not suggesting something new?",
+    "Make these suggestions better!",
   };
 
   public static void main(String[] args) throws IOException {
@@ -27,8 +33,9 @@ public class Tipmailer {
   }
 
   private static String mailBody(String randomTip) {
-    String feedbackMessage = FEEDBACK_MESSAGES[RANDOM.nextInt(FEEDBACK_MESSAGES.length)];
-    return randomTip + "\n\n" + feedbackMessage + ": https://goo.gl/forms/z4VpbWEwJW3POOUN2";
+    String fm = FEEDBACK_MESSAGES[RANDOM.nextInt(FEEDBACK_MESSAGES.length)] + " https://goo.gl/forms/z4VpbWEwJW3POOUN2";
+    String contributionMessage = CONTRIBUTION_MESSAGES[RANDOM.nextInt(CONTRIBUTION_MESSAGES.length)] + " https://docs.google.com/a/sonarsource.com/document/d/19twzgwwu9YXmosBvtR-SujLNirneR4DOHtsqbgJKk7A/edit?usp=sharing";
+    return randomTip + "\n\n" + fm + "\n" + contributionMessage;
   }
 
   private static String getRandomTip(List<Path> tips) {
