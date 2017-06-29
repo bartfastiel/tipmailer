@@ -12,12 +12,17 @@ public class Tipmailer {
   private static final String[] FEEDBACK_MESSAGES = {
     "It would be great to get feedback about yesterday:",
     "What do you think about yesterday's tip?",
+    "Leave your feedback:",
+    "Tell your collegues what you think about yesterday's tip:",
+    "Vote!",
   };
   private static final String[] CONTRIBUTION_MESSAGES = {
     "What do you want to suggest to your collegues?",
     "Contribute!",
     "Why not suggesting something new?",
     "Make these suggestions better!",
+    "Receiving same tips again and again? Contribute!",
+    "What are YOUR suggestions for tips?",
   };
 
   public static void main(String[] args) throws IOException {
