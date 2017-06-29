@@ -1,10 +1,7 @@
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class Tipmailer {
 
@@ -25,9 +22,9 @@ public class Tipmailer {
     "What are YOUR suggestions for tips?",
   };
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     MailSender mailSender = new MailSender();
-    List<Path> tips = Files.list(Paths.get("tips")).collect(Collectors.toList());
+    Map<String, String> tips = WikiReader.getTips();
     Files.readAllLines(Paths.get("subscribers.txt"))
       .forEach(subscriber -> send(mailSender, subscriber, getRandomTip(tips)));
   }
@@ -39,17 +36,12 @@ public class Tipmailer {
 
   private static String mailBody(String randomTip) {
     String fm = FEEDBACK_MESSAGES[RANDOM.nextInt(FEEDBACK_MESSAGES.length)] + " https://goo.gl/forms/z4VpbWEwJW3POOUN2";
-    String contributionMessage = CONTRIBUTION_MESSAGES[RANDOM.nextInt(CONTRIBUTION_MESSAGES.length)] + " https://docs.google.com/a/sonarsource.com/document/d/19twzgwwu9YXmosBvtR-SujLNirneR4DOHtsqbgJKk7A/edit?usp=sharing";
+    String contributionMessage = CONTRIBUTION_MESSAGES[RANDOM.nextInt(CONTRIBUTION_MESSAGES.length)] + " https://github.com/bartfastiel/tipmailer/wiki";
     return randomTip + "\n\n" + fm + "\n" + contributionMessage;
   }
 
-  private static String getRandomTip(List<Path> tips) {
-    Path randomTip = tips.get(RANDOM.nextInt(tips.size()));
-    try {
-      return Files.readAllLines(randomTip).stream().collect(Collectors.joining("\n"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+  private static String getRandomTip(Map<String, String> tips) {
+    Map.Entry[] entries = tips.entrySet().toArray(new Map.Entry[0]);
+    return entries[RANDOM.nextInt(entries.length)].getValue().toString();
   }
-
 }
