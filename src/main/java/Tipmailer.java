@@ -10,7 +10,7 @@ public class Tipmailer {
     "It would be great to get feedback about yesterday:",
     "What do you think about yesterday's tip?",
     "Leave your feedback:",
-    "Tell your collegues what you think about yesterday's tip:",
+    "Tell your colleagues what you think about yesterday's tip:",
     "Vote!",
   };
   private static final String[] CONTRIBUTION_MESSAGES = {
@@ -35,9 +35,10 @@ public class Tipmailer {
   }
 
   private static String mailBody(String randomTip) {
-    String fm = FEEDBACK_MESSAGES[RANDOM.nextInt(FEEDBACK_MESSAGES.length)] + " https://goo.gl/forms/z4VpbWEwJW3POOUN2";
+    String feedbackMessage = FEEDBACK_MESSAGES[RANDOM.nextInt(FEEDBACK_MESSAGES.length)] + " https://goo.gl/forms/z4VpbWEwJW3POOUN2";
     String contributionMessage = CONTRIBUTION_MESSAGES[RANDOM.nextInt(CONTRIBUTION_MESSAGES.length)] + " https://github.com/bartfastiel/tipmailer/wiki";
-    return randomTip + "\n\n" + fm + "\n" + contributionMessage;
+    String unsubscribeMessage = "To unsubscribe, answer to this mail.";
+    return randomTip + "\n\n" + feedbackMessage + "\n" + contributionMessage + "\n" + unsubscribeMessage;
   }
 
   private static String getRandomTip(Map<String, String> tips) {
